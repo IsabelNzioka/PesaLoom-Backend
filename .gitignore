@@ -4,6 +4,9 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+# Local disk storage for applicant-uploaded documents — runtime data, not source.
+storage/
+
 ### STS ###
 .apt_generated
 .classpath
