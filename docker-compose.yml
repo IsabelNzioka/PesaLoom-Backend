@@ -1,20 +1,27 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: lendswift-postgres
+    container_name: pesaloom-postgres
     environment:
-      POSTGRES_DB: ${DB_NAME:-lendswift}
-      POSTGRES_USER: ${DB_USER:-lendswift}
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-lendswift_dev_only}
+      POSTGRES_DB: ${DB_NAME:-pesaloom}
+      POSTGRES_USER: ${DB_USER:-pesaloom}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-pesaloom_dev_only}
     ports:
       - "${DB_PORT:-8085}:5432"
     volumes:
-      - lendswift_pgdata:/var/lib/postgresql/data
+      - pesaloom_pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-lendswift} -d ${DB_NAME:-lendswift}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-pesaloom} -d ${DB_NAME:-pesaloom}"]
       interval: 5s
       timeout: 5s
       retries: 10
 
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: pesaloom-mailpit
+    ports:
+      - "${MAIL_SMTP_PORT:-1025}:1025" # SMTP — point spring.mail.host/port here in dev
+      - "${MAIL_UI_PORT:-8025}:8025"   # web UI at http://localhost:8025 to inspect sent mail
+
 volumes:
-  lendswift_pgdata:
+  pesaloom_pgdata:
