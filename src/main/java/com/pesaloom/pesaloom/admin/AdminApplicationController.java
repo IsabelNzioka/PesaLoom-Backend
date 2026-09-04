@@ -47,7 +47,7 @@ public class AdminApplicationController {
 
     @GetMapping("/loan-applications")
     public Page<AdminLoanApplicationSummaryDto> list(
-            @RequestParam(required = false) LoanApplicationStatus status,
+            @RequestParam(required = false) List<LoanApplicationStatus> status,
             @RequestParam(required = false) LoanType loanType,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant from,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant to,

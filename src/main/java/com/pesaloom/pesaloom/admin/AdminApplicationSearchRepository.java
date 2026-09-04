@@ -24,13 +24,13 @@ public class AdminApplicationSearchRepository {
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Page<LoanApplication> search(LoanApplicationStatus status, LoanType loanType,
+    public Page<LoanApplication> search(List<LoanApplicationStatus> status, LoanType loanType,
                                          Instant from, Instant to, String search, UUID branchId, Pageable pageable) {
         StringBuilder where = baseWhere(loanType, from, to, branchId);
         Map<String, Object> params = baseParams(loanType, from, to, branchId);
 
-        if (status != null) {
-            where.append(" AND a.status = :status");
+        if (status != null && !status.isEmpty()) {
+            where.append(" AND a.status IN :status");
             params.put("status", status);
         }
         if (search != null && !search.isBlank()) {

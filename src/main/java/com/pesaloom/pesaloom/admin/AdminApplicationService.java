@@ -71,7 +71,7 @@ public class AdminApplicationService {
         this.loanRepository = loanRepository;
     }
 
-    public Page<AdminLoanApplicationSummaryDto> list(LoanApplicationStatus status, LoanType loanType,
+    public Page<AdminLoanApplicationSummaryDto> list(List<LoanApplicationStatus> status, LoanType loanType,
                                                        Instant from, Instant to, String search, UUID branchId, Pageable pageable) {
         return adminApplicationSearchRepository.search(status, loanType, from, to, search, branchId, pageable)
                 .map(AdminLoanApplicationSummaryDto::from);
